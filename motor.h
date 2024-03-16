@@ -11,10 +11,10 @@
  * remember to call initialize() when first time using this class
  */
 
-class motorHandler
+class motorHandle
 {
 public:
-  static motorHandler& get() { return s_instance; }
+  static motorHandle& get() { return s_instance; }
 
   void initialize()
   {
@@ -67,7 +67,7 @@ public:
   }
 
 private:
-  motorHandler() {}
-  static motorHandler s_instance;
+  motorHandle() {}
+  static motorHandle s_instance;
 };
 

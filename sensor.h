@@ -9,10 +9,10 @@
  ** signleton used for handling sensor-related utilities
  */
 
- class sensorHandler
+ class sensorHandle
  {
 public:
-  static sensorHandler& get() { return s_instance; }
+  static sensorHandle& get() { return s_instance; }
 
   byte read1() { return analogRead(SA1); }
   byte read2() { return analogRead(SA2); }
@@ -35,6 +35,6 @@ public:
   }
 
 private:
-  sensorHandler() {}
-  static sensorHandler s_instance;
+  sensorHandle() {}
+  static sensorHandle s_instance;
  };

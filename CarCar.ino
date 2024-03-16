@@ -21,16 +21,16 @@ void setup()
 void loop()
 {
   //motor test
-  static motorHandler& MotorHandler = motorHandler::get();
-  MotorHandler.initialize();
-  MotorHandler.moveForward(3000);
-  MotorHandler.moveBackward(3000);
-  MotorHandler.leftTurn(3000);
-  MotorHandler.rightTurn(3000);
-  MotorHandler.stop();
+  static motorHandle& MotorHandle = motorHandle::get();
+  MotorHandle.initialize();
+  MotorHandle.moveForward(3000);
+  MotorHandle.moveBackward(3000);
+  MotorHandle.leftTurn(3000);
+  MotorHandle.rightTurn(3000);
+  MotorHandle.stop();
 
   //sensor test
-  sensorHandler::get().log();
+  sensorHandle::get().log();
 
   delay(1000);
 }
