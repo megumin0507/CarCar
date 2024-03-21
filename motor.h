@@ -22,52 +22,81 @@ public:
     digitalWrite(PWMB, HIGH);
   }
 
-  void moveForward(int duration)
-  {
-    digitalWrite(AIN1, HIGH);
-    digitalWrite(AIN2, LOW);
-    digitalWrite(BIN1, LOW);
-    digitalWrite(BIN2, HIGH);
-    delay(duration);
+  void run(int error)
+  { 
+    //adjusting error
+    if (error > 0)
+    {
+        leftAdjustedSpeed = clamp(leftSpeed - error*4);
+        rightAdjustedSpeed = clamp(rightSpeed + error/2);
+    }
+    else if (error < 0)
+    {
+        leftAdjustedSpeed = clamp(leftSpeed - error/2);
+        rightAdjustedSpeed = clamp(rightSpeed + error*4);
+    }
+    else
+    {
+      leftAdjustedSpeed = clamp(leftSpeed);
+      rightAdjustedSpeed = clamp(rightSpeed);
+    }
+
+    //left motor
+    if (leftAdjustedSpeed > 0)
+    {
+      analogWrite(AIN2, 0);
+      analogWrite(AIN1, leftAdjustedSpeed);
+    }
+    else
+    {
+      analogWrite(AIN2, -leftAdjustedSpeed);
+      analogWrite(AIN1, 0);
+    }
+
+    //right motor
+    if (rightAdjustedSpeed > 0)
+    {
+      analogWrite(BIN1, 0);
+      analogWrite(BIN2, rightAdjustedSpeed);
+    }
+    else
+    {
+      analogWrite(BIN1, 0);
+      analogWrite(BIN2, -rightAdjustedSpeed);
+    }
   }
 
-  void moveBackward(int duration)
+   void stop()
   {
-    digitalWrite(AIN1, LOW);
-    digitalWrite(AIN2, HIGH);
-    digitalWrite(BIN1, HIGH);
-    digitalWrite(BIN2, LOW);
-    delay(duration);
+    analogWrite(AIN1, 0);
+    analogWrite(AIN2, 0);
+    analogWrite(BIN1, 0);
+    analogWrite(BIN2, 0);
   }
 
-  void leftTurn(int duration)
+  void logSpeed()
   {
-    digitalWrite(AIN1, LOW);
-    digitalWrite(AIN2, HIGH);
-    digitalWrite(BIN1, LOW);
-    digitalWrite(BIN2, HIGH);
-    delay(duration);
+    Serial.print(leftAdjustedSpeed);
+    Serial.print(' ');
+    Serial.print(rightAdjustedSpeed);
+    Serial.println();
   }
 
-  void rightTurn(int duration)
+  int clamp(int value)
   {
-    digitalWrite(AIN1, HIGH);
-    digitalWrite(AIN2, LOW);
-    digitalWrite(BIN1, HIGH);
-    digitalWrite(BIN2, LOW);
-    delay(duration);
+    if (value < -255) return -255;
+    if (value > 255) return 255;
+    return value;
   }
 
-  void stop()
-  {
-    digitalWrite(AIN1, LOW);
-    digitalWrite(AIN2, LOW);
-    digitalWrite(BIN1, LOW);
-    digitalWrite(BIN2, LOW);
-  }
 
 private:
   motorHandle() {}
   static motorHandle s_instance;
+
+  int leftSpeed = 130, rightSpeed = 150;
+  int leftAdjustedSpeed = 130, rightAdjustedSpeed = 150;
 };
+
+motorHandle motorHandle::s_instance;
 
