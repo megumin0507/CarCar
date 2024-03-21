@@ -10,11 +10,11 @@ void setup()
   pinMode(BIN1, OUTPUT);
   pinMode(BIN2, OUTPUT);
   pinMode(PWMB, OUTPUT);
-  pinMode(SA1, INPUT);
-  pinMode(SA2, INPUT);
-  pinMode(SA3, INPUT);
-  pinMode(SA4, INPUT);
-  pinMode(SA5, INPUT);
+  pinMode(SD1, INPUT);
+  pinMode(SD2, INPUT);
+  pinMode(SD3, INPUT);
+  pinMode(SD4, INPUT);
+  pinMode(SD5, INPUT);
   Serial.begin(9600);
 }
 
