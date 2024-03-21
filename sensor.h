@@ -5,8 +5,8 @@
 #define SD4 38
 #define SD5 40
 
-/*
- ** signleton used for handling sensor-related utilities
+/**
+ * signleton used for handling sensor-related utilities
  */
 
  class sensorHandle

@@ -27,13 +27,13 @@ public:
     //adjusting error
     if (error > 0)
     {
-        leftAdjustedSpeed = clamp(leftSpeed - error*4);
+        leftAdjustedSpeed = clamp(leftSpeed - error);
         rightAdjustedSpeed = clamp(rightSpeed + error/2);
     }
     else if (error < 0)
     {
         leftAdjustedSpeed = clamp(leftSpeed - error/2);
-        rightAdjustedSpeed = clamp(rightSpeed + error*4);
+        rightAdjustedSpeed = clamp(rightSpeed + error);
     }
     else
     {
@@ -94,8 +94,8 @@ private:
   motorHandle() {}
   static motorHandle s_instance;
 
-  int leftSpeed = 130, rightSpeed = 150;
-  int leftAdjustedSpeed = 130, rightAdjustedSpeed = 150;
+  int leftSpeed = 90, rightSpeed = 90;
+  int leftAdjustedSpeed = 0, rightAdjustedSpeed = 0;
 };
 
 motorHandle motorHandle::s_instance;
