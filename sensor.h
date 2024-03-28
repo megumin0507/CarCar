@@ -6,21 +6,20 @@
 #define SD5 40
 
 /**
- * signleton used for handling sensor-related utilities
+ * static class used for handling sensor-related utilities
  */
 
- class sensorHandle
+ class sensor
  {
 public:
-  static sensorHandle& get() { return s_instance; }
 
-  byte read1() { return digitalRead(SD1); }
-  byte read2() { return digitalRead(SD2); }
-  byte read3() { return digitalRead(SD3); }
-  byte read4() { return digitalRead(SD4); }
-  byte read5() { return digitalRead(SD5); }
+  static byte read1() { return digitalRead(SD1); }
+  static byte read2() { return digitalRead(SD2); }
+  static byte read3() { return digitalRead(SD3); }
+  static byte read4() { return digitalRead(SD4); }
+  static byte read5() { return digitalRead(SD5); }
 
-  void log()
+  static void log()
   {
     Serial.print(read1());
     Serial.print(' ');
@@ -33,8 +32,4 @@ public:
     Serial.print(read5());
     Serial.println();
   }
-
-private:
-  sensorHandle() {}
-  static sensorHandle s_instance;
  };

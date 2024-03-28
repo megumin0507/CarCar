@@ -7,22 +7,20 @@
 #define PWMB 12
 
 /**
- * singleton used for handling motor-related utilities
+ * static class used for handling motor-related utilities
  * remember to call initialize() when first time using this class
  */
 
-class motorHandle
+class motor
 {
 public:
-  static motorHandle& get() { return s_instance; }
-
-  void initialize()
+  static void initialize()
   {
     digitalWrite(PWMA, HIGH);
     digitalWrite(PWMB, HIGH);
   }
 
-  void run(int error)
+  static void run(int error)
   { 
     //adjusting error
     if (error > 0)
@@ -66,7 +64,7 @@ public:
     }
   }
 
-   void stop()
+  static void stop()
   {
     analogWrite(AIN1, 0);
     analogWrite(AIN2, 0);
@@ -74,7 +72,7 @@ public:
     analogWrite(BIN2, 0);
   }
 
-  void logSpeed()
+  static void logSpeed()
   {
     Serial.print(leftAdjustedSpeed);
     Serial.print(' ');
@@ -82,7 +80,7 @@ public:
     Serial.println();
   }
 
-  int clamp(int value)
+  static int clamp(int value)
   {
     if (value < -255) return -255;
     if (value > 255) return 255;
@@ -91,12 +89,7 @@ public:
 
 
 private:
-  motorHandle() {}
-  static motorHandle s_instance;
-
-  int leftSpeed = 90, rightSpeed = 90;
-  int leftAdjustedSpeed = 0, rightAdjustedSpeed = 0;
+  static int leftSpeed, rightSpeed;
+  static int leftAdjustedSpeed, rightAdjustedSpeed;
 };
-
-motorHandle motorHandle::s_instance;
 

@@ -2,14 +2,17 @@
 #include "motor.h"
 #include "sensor.h"
 
-int getError(int l2, int l1, int m, int r1, int r2)
-{ 
+int motor::leftSpeed = 90;
+int motor::rightSpeed = 90;
+int motor::leftAdjustedSpeed = 0;
+int motor::rightAdjustedSpeed = 0;
+
+int getError(int l2, int l1, int m, int r1, int r2) {
   if (l2 + l1 + r1 + r2 == 0 || m) return 0;
-  return (l2*90 + l1*60 + r1*(-60) + r2*(-90)) / (l2 + l1 + r1 + r2);
+  return (l2 * 90 + l1 * 60 + r1 * (-60) + r2 * (-90)) / (l2 + l1 + r1 + r2);
 }
 
-void setup()
-{
+void setup() {
   pinMode(PWMA, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(AIN1, OUTPUT);
@@ -24,19 +27,16 @@ void setup()
   Serial.begin(9600);
 }
 
-void loop()
-{
+void loop() {
   //motor test
-  static motorHandle& MotorHandle = motorHandle::get();
-  MotorHandle.initialize();
+  motor::initialize();
 
-  static sensorHandle& SensorHandle = sensorHandle::get();
-  byte l2 = SensorHandle.read1(), l1 = SensorHandle.read2(), m = SensorHandle.read3(), r1 = SensorHandle.read4(), r2 = SensorHandle.read5();
+  byte l2 = sensor::read1(), l1 = sensor::read2(), m = sensor::read3(), r1 = sensor::read4(), r2 = sensor::read5();
 
-  MotorHandle.run(getError(l2, l1, m, r1, r2));
+  motor::run(getError(l2, l1, m, r1, r2));
 
   //sensor test
-  sensorHandle::get().log();
+  sensor::log();
 
   delay(50);
 }
