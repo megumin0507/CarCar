@@ -1,5 +1,5 @@
 
-#define SD1 32 // SA stands for sensor digital
+#define SD1 32 // SD stands for sensor digital
 #define SD2 34
 #define SD3 36
 #define SD4 38
@@ -12,6 +12,15 @@
  class sensor
  {
 public:
+
+  static void setup()
+  {
+    pinMode(SD1, INPUT);
+    pinMode(SD2, INPUT);
+    pinMode(SD3, INPUT);
+    pinMode(SD4, INPUT);
+    pinMode(SD5, INPUT);
+  }
 
   static byte read1() { return digitalRead(SD1); }
   static byte read2() { return digitalRead(SD2); }

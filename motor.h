@@ -14,6 +14,16 @@
 class motor
 {
 public:
+  static void setup()
+  {
+    pinMode(PWMA, OUTPUT);
+    pinMode(AIN2, OUTPUT);
+    pinMode(AIN1, OUTPUT);
+    pinMode(BIN1, OUTPUT);
+    pinMode(BIN2, OUTPUT);
+    pinMode(PWMB, OUTPUT);
+  }
+
   static void initialize()
   {
     digitalWrite(PWMA, HIGH);

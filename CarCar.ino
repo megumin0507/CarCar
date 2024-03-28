@@ -1,6 +1,8 @@
 
 #include "motor.h"
 #include "sensor.h"
+#include "RFID.h"
+#include "bluetooth.h"
 
 int motor::leftSpeed = 90;
 int motor::rightSpeed = 90;
@@ -13,30 +15,27 @@ int getError(int l2, int l1, int m, int r1, int r2) {
 }
 
 void setup() {
-  pinMode(PWMA, OUTPUT);
-  pinMode(AIN2, OUTPUT);
-  pinMode(AIN1, OUTPUT);
-  pinMode(BIN1, OUTPUT);
-  pinMode(BIN2, OUTPUT);
-  pinMode(PWMB, OUTPUT);
-  pinMode(SD1, INPUT);
-  pinMode(SD2, INPUT);
-  pinMode(SD3, INPUT);
-  pinMode(SD4, INPUT);
-  pinMode(SD5, INPUT);
+  motor::setup();
+  sensor::setup();
+  RFID::setup();
+  bluetooth::setup();
   Serial.begin(9600);
 }
 
 void loop() {
   //motor test
-  motor::initialize();
-
-  byte l2 = sensor::read1(), l1 = sensor::read2(), m = sensor::read3(), r1 = sensor::read4(), r2 = sensor::read5();
-
-  motor::run(getError(l2, l1, m, r1, r2));
+  // motor::initialize();
+  // byte l2 = sensor::read1(), l1 = sensor::read2(), m = sensor::read3(), r1 = sensor::read4(), r2 = sensor::read5();
+  // motor::run(getError(l2, l1, m, r1, r2));
 
   //sensor test
-  sensor::log();
+  // sensor::log();
 
-  delay(50);
+  //RFID test
+  //RFID::loop();
+
+  //bluetooth test
+  bluetooth::loop();
+
+  delay(100);
 }
